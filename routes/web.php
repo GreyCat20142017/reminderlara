@@ -23,6 +23,8 @@
 
     Auth::routes();
 
+    Route::get('/tags', 'TagController@index')->name('tags.index');
+
     Route::get('/users', 'UsersController@index')->name('users.index');
     Route::get('/users/create', 'UsersController@create')->name('users.create');
     Route::post('/users', 'UsersController@store')->name('users.store');

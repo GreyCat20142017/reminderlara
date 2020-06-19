@@ -1,8 +1,8 @@
 import React from 'react';
 
 export const LoggedStatus = ({user}) => (
-    <p>{user && user['name'] ?
-        `Выполнен вход под пользователем ${user['name']}` :
+    <p className={'text-white p-0 m-0'}>{user && user['name'] ?
+        `${user['name']}` :
         'Вход не выполнен'}
     </p>
 );
