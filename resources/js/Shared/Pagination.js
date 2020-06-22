@@ -7,12 +7,9 @@ const BTN_STYLES = ['mr-1', 'mb-1', 'py-1', 'px-2', 'border rounded', 'text-sm',
 const PageLink = ({active, label, url}) => {
     const className = classNames(
         [
-            ...BTN_STYLES
-        ],
-        {
-            'bg-primary': active,
-            'text-white': active
-        }
+            ...BTN_STYLES,
+
+        active ? 'bg-primary text-white' : ' btn-outline-primary']
     );
     return (
         <InertiaLink className={className} href={url}>
@@ -24,9 +21,7 @@ const PageLink = ({active, label, url}) => {
 const PageLinkDisabled = ({label}) => {
     const className = classNames(
         BTN_STYLES,
-        {
-            'text-muted': true
-        }
+        'bg-secondary text-muted'
     );
     return <span className={className}>{label}</span>;
 };

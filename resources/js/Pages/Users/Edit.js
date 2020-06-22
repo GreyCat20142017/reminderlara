@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react'
-import { Inertia } from '@inertiajs/inertia'
+import React, {useState, useEffect} from 'react'
+import {Inertia} from '@inertiajs/inertia'
 import Layout from '@/Shared/Layout'
-import { HalfCircleSpinner } from 'react-epic-spinners'
 
 const Edit = (props) => {
     const [name, setName] = useState(props.user.name);
@@ -52,7 +51,7 @@ const Edit = (props) => {
                     <form action="/users" method="POST" className="my-5" onSubmit={updateUser}>
                         <div className="form-group">
                             <label htmlFor="name">Name</label>
-                            <input type="text" className="form-control" id="name" placeholder="Name"
+                            <input type="text" className="form-control" id="name" placeholder="Имя"
                                    defaultValue={props.user.name} onChange={(e) => setName(e.target.value)}/>
                         </div>
                         <div className="form-group">
@@ -62,18 +61,11 @@ const Edit = (props) => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="password">Password</label>
-                            <input type="password" className="form-control" id="password" placeholder="Password"
+                            <input type="password" className="form-control" id="password" placeholder="Пароль"
                                    onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                         <div className={'btn-group'}>
                             <button type="submit" className="d-flex btn btn-primary" disabled={loading}>
-                                {loading &&
-                                <HalfCircleSpinner
-                                    size={20}
-                                    color={'#fff'}
-                                    className="mr-2"
-                                />
-                                }
                                 <span>Изменить</span>
                             </button>
                             <button className="btn btn-danger ml-3" onClick={deleteUser}>Удалить</button>

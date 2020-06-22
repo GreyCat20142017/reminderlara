@@ -3,83 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
-use Illuminate\Http\Request;
+use App\Http\Requests\ItemRequest;
+use Inertia\Inertia;
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+    public function index() {
+        $items = Item::paginate(7);
+        $links = $items->links();
+        return Inertia::render('Items/Index', [
+            'items' => $items,
+            'links' => $links
+
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function create() {
+        return Inertia::render('Items/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(ItemRequest $request) {
+        Item::create([
+            'text' => $request->text,
+            'details' => $request->details
+        ]);
+
+        return redirect()->route('items.index')->with('successMessage', 'Элемент успешно добавлен!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Item $item)
-    {
-        //
+    public function show(Item $item) {
+        return Inertia::render('Items/Edit', [
+            'item' => $item,
+            'readOnly' => true
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Item $item)
-    {
-        //
+    public function edit(Item $item) {
+
+        return Inertia::render('Items/Edit', [
+            'item' => $item,
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Item $item)
-    {
-        //
+    public function update(ItemRequest $request, Item $item) {
+        $item->update([
+            'text' => $request->text,
+            'details' => $request->details,
+        ]);
+
+        return redirect()->route('items.index')->with('successMessage', 'Элемент успешно изменен!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Item  $item
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Item $item)
-    {
-        //
+    public function destroy(Item $item) {
+        $item->delete();
+
+        return redirect()->route('items.index')->with('successMessage', 'Элемент успешно удален!');
     }
 }

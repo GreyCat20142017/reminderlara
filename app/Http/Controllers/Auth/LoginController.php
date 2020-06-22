@@ -79,11 +79,9 @@
 
         public function login(Request $request) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                return Inertia::render('About', [
-                    'user' => Auth::user()
-                ]);
+                return Redirect::intended();
             } else {
-                return back()->withErrors('Error logging in!');
+                return back()->withErrors('Ошибка входа!');
             }
         }
 

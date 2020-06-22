@@ -11,7 +11,7 @@ class Item extends Model
     public static $MEMO = 'MEMO';
 
     public $timestamps = false;
-    protected $fillable = ['user_id', 'type', 'reference', 'title', 'description', 'youtube'];
+    protected $fillable = ['user_id', 'type', 'text', 'details'];
 
     public static function availableValues() {
         return [static::$MEMO, static::$PROBLEM];

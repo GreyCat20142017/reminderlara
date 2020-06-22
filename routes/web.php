@@ -13,21 +13,17 @@
     });
 
 
-    Route::get('/questions', function () {
-        return Inertia::render('Content', ['title' => 'Вопросы']);
-    });
+//    Route::get('/questions', function () {
+//        return Inertia::render('Content', ['title' => 'Вопросы']);
+//    });
 
-    Route::get('/problems', function () {
-        return Inertia::render('Content', ['title' => 'Грабли']);
-    });
+//    Route::get('/problems', function () {
+//        return Inertia::render('Content', ['title' => 'Грабли']);
+//    });
 
     Auth::routes();
 
-    Route::get('/tags', 'TagController@index')->name('tags.index');
+    Route::resource('tags', 'TagController')->middleware(['auth']);
+    Route::resource('items', 'ItemController')->middleware(['auth']);
+    Route::resource('users', 'UsersController')->middleware(['auth']);
 
-    Route::get('/users', 'UsersController@index')->name('users.index');
-    Route::get('/users/create', 'UsersController@create')->name('users.create');
-    Route::post('/users', 'UsersController@store')->name('users.store');
-    Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
-    Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
-    Route::delete('/users/{user}', 'UsersController@destroy')->name('users.destroy');

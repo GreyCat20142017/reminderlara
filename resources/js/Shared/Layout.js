@@ -22,8 +22,8 @@ export default function Layout({children}) {
                     <div className={modalClass} id="navbarNavAltMarkup">
                         <div className="navbar-nav ml-auto">
                             <InertiaLink href="/about" className="nav-item nav-link">О программе</InertiaLink>
-                            <InertiaLink href="/questions" className="nav-item nav-link">Вопросы</InertiaLink>
-                            <InertiaLink href="/problems" className="nav-item nav-link">Проблемы</InertiaLink>
+                            <InertiaLink href="/items" className="nav-item nav-link">Вопросы</InertiaLink>
+                            <InertiaLink href="/items" className="nav-item nav-link">Проблемы</InertiaLink>
                             {!currentUser &&
                             <InertiaLink href="/login" className="nav-item nav-link">Вход</InertiaLink>}
                             {currentUser &&
