@@ -13,17 +13,17 @@
     });
 
 
-//    Route::get('/questions', function () {
-//        return Inertia::render('Content', ['title' => 'Вопросы']);
-//    });
-
-//    Route::get('/problems', function () {
-//        return Inertia::render('Content', ['title' => 'Грабли']);
-//    });
-
     Auth::routes();
 
-    Route::resource('tags', 'TagController')->middleware(['auth']);
-    Route::resource('items', 'ItemController')->middleware(['auth']);
-    Route::resource('users', 'UsersController')->middleware(['auth']);
+    Route::middleware(['auth'])->group(function () {
+
+        Route::resource('tags', 'TagController');
+
+
+        Route::get('/items/{type?}', 'ItemController@index')->name('items.index')->where('type', 'MEMO|NOTES');
+        Route::get('/items/{type}/create', 'ItemController@create')->name('items.create')->where('type', 'MEMO|NOTES');
+        Route::resource('items', 'ItemController')->except(['index', 'create']);
+
+        Route::resource('users', 'UsersController');
+    });
 

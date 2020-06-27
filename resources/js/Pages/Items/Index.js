@@ -4,25 +4,25 @@ import {InertiaLink} from '@inertiajs/inertia-react';
 import Pagination from '@/Shared/Pagination';
 import Layout from '../../Shared/Layout';
 import SimpleTable from '../../Shared/SimpleTable/SimpleTable';
+import {CONTENT_TITLES} from '../../constants';
 
 
-const Index = ({items, links}) => {
+const Index = ({items, links, type = CONTENT_TYPES.MEMO}) => {
     const {data} = items;
 
     const action = (row) => {
-        Inertia.visit(`items/${row['id']}/edit`, {...row})
-            .then(() => {
-            })
-    }
+        Inertia.visit(`/items/${row['id']}/edit`, {...row})
+    };
 
     return (
         <Layout>
             <div className="container">
-                <h4>Список проблем</h4>
+                <h4>{CONTENT_TITLES[type]}</h4>
                 <div className='my-5'>
-                    <InertiaLink href='/items/create' className='btn btn-primary'>Создать элемент</InertiaLink>
+                    <InertiaLink href={`/items/${type}/create`} className='btn btn-primary'>Создать
+                        элемент</InertiaLink>
                 </div>
-                <SimpleTable data={data} action={action}/>
+                <SimpleTable data={data} action={action} hiddenColumns={['user_id', 'type']}/>
                 <Pagination links={links}/>
             </div>
         </Layout>

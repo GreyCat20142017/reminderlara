@@ -2,9 +2,9 @@ import React, {useState} from 'react';
 import {Inertia, InertiaLink} from '@inertiajs/inertia';
 import {usePage} from '@inertiajs/inertia-react';
 import Layout from '../Shared/Layout';
-import {Errors} from '../Shared/Errors';
+import Errors from '../Shared/Errors';
 
-export default () => {
+const Login = () => {
     const {errors} = usePage();
     const [sending, setSending] = useState(false);
     const [values, setValues] = useState({
@@ -59,3 +59,6 @@ export default () => {
         </Layout>
     );
 };
+
+
+export default Login;

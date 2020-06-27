@@ -21,7 +21,7 @@ const PageLink = ({active, label, url}) => {
 const PageLinkDisabled = ({label}) => {
     const className = classNames(
         BTN_STYLES,
-        'bg-secondary text-muted'
+        'bg-light text-muted'
     );
     return <span className={className}>{label}</span>;
 };

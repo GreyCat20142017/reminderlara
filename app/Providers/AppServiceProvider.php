@@ -2,6 +2,7 @@
 
     namespace App\Providers;
 
+    use App\Models\Tag;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Config;
     use Inertia\Inertia;
@@ -100,9 +101,14 @@
                     [
                         'id' => $user->id,
                         'name' => $user->name,
-                        'email' => $user->email
+                        'email' => $user->email,
+                        'admin' => $user->admin
                     ]
                     : null;
+            });
+
+            Inertia::share('allTags', function () {
+                return Tag::all();
             });
 
             $this->pagintaionLinks();

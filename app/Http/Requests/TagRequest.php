@@ -33,6 +33,7 @@ class TagRequest extends FormRequest
     {
         return [
             'max'  => 'Поле ":attribute" должно быть длиной не более :max',
+            'unique'  => 'Поле ":attribute" должно быть уникальным'
         ];
     }
 }

@@ -1,9 +1,12 @@
-import React, {useState} from 'react'
-import Layout from '@/Shared/Layout'
-import {Inertia} from '@inertiajs/inertia'
+import React, {useState} from 'react';
+import {Inertia} from '@inertiajs/inertia';
 import {InertiaLink} from '@inertiajs/inertia-react';
+import Layout from '@/Shared/Layout';
+import Errors from '@/Shared/Errors';
+import {CONTENT_TITLES, CONTENT_TYPES} from '../../constants';
+import {getPageTitle} from '../../functions';
 
-export default function Create({errors}) {
+export default function Create({errors, type = CONTENT_TYPES.MEMO}) {
 
     const [text, setText] = useState('');
     const [details, setDetails] = useState('');
@@ -13,23 +16,17 @@ export default function Create({errors}) {
 
         Inertia.post('/items', {
             text,
-            details
-        })
-            .then(() => {
-                // code
-            })
+            details,
+            type
+        });
     };
 
     return (
         <Layout>
             <div className="container">
-                <h4>Создание тега</h4>
-                <div className="col-md-6">
-                    {Object.keys(errors).length > 0 &&
-                    <div className="alert alert-danger mt-4">
-                        {errors[Object.keys(errors)[0]][0]}
-                    </div>
-                    }
+                <h4>Создание элемента: {getPageTitle(type)}</h4>
+                <div className="col-md-12">
+                    <Errors errors={errors}/>
 
                     <form action="/tags" method="POST" className="my-5" onSubmit={createItem}>
                         <div className="form-group">
@@ -41,15 +38,15 @@ export default function Create({errors}) {
 
                         <div className="form-group">
                             <label htmlFor="name">Краткое решение или ответ</label>
-                            <input type="text" className="form-control" id="details" placeholder="Решение или ответ"
-                                   value={details} title={'Решение или ответ'}
-                                   onChange={(evt) => setDetails(evt.target.value)}/>
+                            <textarea className="form-control" id="details" placeholder="Решение или ответ"
+                                      value={details} title={'Решение или ответ'} rows={7}
+                                      onChange={(evt) => setDetails(evt.target.value)}/>
                         </div>
 
                         <button type="submit" className="btn btn-primary" title={'Создать и сохранить'}>
                             Создать элемент
                         </button>
-                        <InertiaLink href='/tags' className='btn btn-secondary ml-2'
+                        <InertiaLink href={`/items/${type}`} className='btn btn-secondary ml-2'
                                      title={'Вернуться к предыдущему экрану'}>
                             Назад
                         </InertiaLink>

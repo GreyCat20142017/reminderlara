@@ -15,7 +15,6 @@ const Edit = ({errors, tag, readOnly = false}) => {
         })
     }
 
-    console.log(tag, errors);
 
     const deleteTag = evt => {
         evt.preventDefault();
@@ -42,7 +41,7 @@ const Edit = ({errors, tag, readOnly = false}) => {
 
                     <form action='/tags' method='POST' className='my-5' onSubmit={update}>
                         <div className='form-group'>
-                            <label htmlFor='name'>Name</label>
+                            <label htmlFor='name'>Тег</label>
                             <input className='form-control' id='name' placeholder='Тег' type='text'
                                    title={'Название тега'}
                                    value={name} onChange={(e) => setName(e.target.value)} readOnly={readOnly}/>
@@ -57,7 +56,7 @@ const Edit = ({errors, tag, readOnly = false}) => {
                                     title={'Удалить тег'}>
                                 Удалить
                             </button>
-                            <InertiaLink className='btn btn-secondary text-dark ml-3' href='/tags'
+                            <InertiaLink className='btn btn-secondary text-white ml-3' href='/tags'
                                          title={'Вернуться к предыдущему экрану без сохранения изменений'}>
                                 Назад
                             </InertiaLink>

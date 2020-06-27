@@ -11,7 +11,7 @@ export default function Create(props) {
         event.preventDefault();
 
         Inertia.post('/tags', {
-            name,
+            name
         })
             .then(() => {
                 // code
@@ -31,13 +31,19 @@ export default function Create(props) {
 
                     <form action="/tags" method="POST" className="my-5" onSubmit={createTag}>
                         <div className="form-group">
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name">Тег</label>
                             <input type="text" className="form-control" id="name" placeholder="Name" value={name}
+                                   title={'Тег'}
                                    onChange={(evt) => setName(evt.target.value)}/>
                         </div>
 
-                        <button type="submit" className="btn btn-primary">Создать тег</button>
-                        <InertiaLink href='/tags' className='btn btn-secondary ml-2'>Назад</InertiaLink>
+                        <button type="submit" className="btn btn-primary" title={'Создать и сохранить'}>
+                            Создать тег
+                        </button>
+                        <InertiaLink href='/tags' className='btn btn-secondary ml-2'
+                                     title={'Вернуться к предыдущему экрану'}>
+                            Назад
+                        </InertiaLink>
                     </form>
                 </div>
             </div>

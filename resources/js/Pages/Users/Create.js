@@ -52,8 +52,9 @@ export default function Create(props) {
                                    onChange={(e) => setPassword(e.target.value)}/>
                         </div>
                         <div className='form-group'>
-                            <label htmlFor='password'>Повтор пароля</label>
-                            <input type='password' className='form-control' id='password' placeholder='Повтор пароля'
+                            <label htmlFor='passwordRepeat'>Повтор пароля</label>
+                            <input type='password' className='form-control' id='passwordRepeat'
+                                   placeholder='Повтор пароля'
                                    title={'Повтор пароля'}
                                    onChange={(e) => setPasswordRepeat(e.target.value)}/>
                         </div>
