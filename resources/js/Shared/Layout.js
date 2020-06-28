@@ -9,6 +9,10 @@ export default function Layout({children}) {
     const [modalState, setModalState] = useState(false);
     const modalClass = (modalState ? '' : 'collapse') + ' navbar-collapse';
 
+    const active = window.location.pathname;
+
+    const activeClass = (href) => (active && active.startsWith(href) ? 'active' : '');
+
     return (
         <main style={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
             <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
@@ -23,12 +27,15 @@ export default function Layout({children}) {
                     </button>
                     <div className={modalClass} id='navbarNavAltMarkup'>
                         <div className='navbar-nav ml-auto'>
-                            <InertiaLink href='/about' className='nav-item nav-link'>О программе</InertiaLink>
-                            <InertiaLink href={'/items/' + CONTENT_TYPES.NOTES} className='nav-item nav-link'
+                            <InertiaLink href='/about' className={'nav-item nav-link ' + activeClass('/about')}>О
+                                программе</InertiaLink>
+                            <InertiaLink href={'/items/' + CONTENT_TYPES.NOTES}
+                                         className={'nav-item nav-link ' + activeClass('/items/' + CONTENT_TYPES.NOTES)}
                                          title={'Заметки по популярным вопросам к собеседованию'}>
                                 Вопросы
                             </InertiaLink>
-                            <InertiaLink href={'/items/' + CONTENT_TYPES.MEMO} className='nav-item nav-link'
+                            <InertiaLink href={'/items/' + CONTENT_TYPES.MEMO}
+                                         className={'nav-item nav-link ' + activeClass('/items/' + CONTENT_TYPES.MEMO)}
                                          title={'Грабли и проблемы, а также возможные пути их решения'}>
                                 Проблемы
                             </InertiaLink>

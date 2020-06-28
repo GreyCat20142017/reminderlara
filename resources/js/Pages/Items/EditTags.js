@@ -17,7 +17,7 @@ const TagList = ({tags, isAll = false, onTagClick}) => (
     </div>
 );
 
-export default ({currentTags, setCurrentTags, allTags, unsetDetails, isChanged}) => {
+export default ({currentTags, setCurrentTags, allTags, setTagsMode, isChanged}) => {
 
     const [current, setCurrent] = useState(currentTags);
     const [all, setAll] = useState(allTags);
@@ -31,7 +31,7 @@ export default ({currentTags, setCurrentTags, allTags, unsetDetails, isChanged})
     const onKeyDown = (evt) => {
         if (evt.keyCode === KEYCODES.ESC) {
             evt.preventDefault();
-            unsetDetails();
+            setTagsMode(false);
         }
     };
 
@@ -43,7 +43,11 @@ export default ({currentTags, setCurrentTags, allTags, unsetDetails, isChanged})
     const onSave = () => {
         isChanged(true);
         setCurrentTags(current);
-        unsetDetails();
+        setTagsMode(false);
+    };
+
+    const onClose = () => {
+      setTagsMode(false);
     };
 
     const deleteFromCurrent = (ind) => {
@@ -70,12 +74,15 @@ export default ({currentTags, setCurrentTags, allTags, unsetDetails, isChanged})
                     <TagList tags={all} isAll={true} onTagClick={addToCurrent}/>
                 </div>
             </div>
+            <p className='text-center text-primary'>
+                <small>Для перемещения тега из "выбранных" в раздел "все" и наоборот - клик по тегу</small>
+            </p>
             <div className='d-flex justify-content-center flex-wrap'>
                 <button className='btn btn-sm btn-primary m-1' onClick={onSave} type={'button'}
                         title='сохранить изменения предварительно'>
                     сохранить изменения
                 </button>
-                <button className='btn btn-sm btn-secondary m-1' onClick={unsetDetails} type={'button'}
+                <button className='btn btn-sm btn-secondary m-1' onClick={onClose} type={'button'}
                         title='Для возврата к предыдущему экрану - Еsc'>
                     выйти (ESC)
                 </button>

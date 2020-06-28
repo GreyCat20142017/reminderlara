@@ -28,6 +28,10 @@
             return $this->belongsToMany(Tag::class);
         }
 
+        public function refs() {
+            return $this->belongsToMany(Link::class);
+        }
+
         public function scopeOfType($query, $type) {
             return $query->where('type', $type);
         }

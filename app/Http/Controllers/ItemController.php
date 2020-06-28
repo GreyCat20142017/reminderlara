@@ -37,7 +37,8 @@
         public function show(Item $item) {
             return Inertia::render('Items/Edit', [
                 'item' => $item,
-                'tags' => $item->tags(),
+                'tags' => $item->tags()->get()->toArray(),
+                'refs' => $item->refs()->get()->toArray(),
                 'readOnly' => true
             ]);
         }
@@ -46,6 +47,7 @@
             return Inertia::render('Items/Edit', [
                 'item' => $item,
                 'tags' => $item->tags()->get()->toArray(),
+                'refs' => $item->refs()->get()->toArray()
             ]);
         }
 
@@ -58,6 +60,10 @@
             if ($request['tags']) {
                 $item->tags()->detach();
                 $item->tags()->attach($request['tags']);
+            }
+            if ($request['refs']) {
+                $item->refs()->detach();
+                $item->refs()->attach($request['refs']);
             }
 
             return redirect()->route('items.index', ['type' => $item->type])->with('successMessage',

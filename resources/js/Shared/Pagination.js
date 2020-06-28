@@ -4,15 +4,20 @@ import classNames from 'classnames';
 
 const BTN_STYLES = ['mr-1', 'mb-1', 'py-1', 'px-2', 'border rounded', 'text-sm', 'btn-sm '];
 
+const BACK = 'Назад';
+const NEXT = 'Далее';
+
+
 const PageLink = ({active, label, url}) => {
     const className = classNames(
         [
             ...BTN_STYLES,
 
-        active ? 'bg-primary text-white' : ' btn-outline-primary']
+            active ? 'bg-primary text-white' : ' btn-outline-primary']
     );
     return (
-        <InertiaLink className={className} href={url}>
+        <InertiaLink className={className} href={url}
+                     title={((label === BACK) || (label === NEXT)) ? label : 'Страница ' + label}>
             {label}
         </InertiaLink>
     );
@@ -28,8 +33,8 @@ const PageLinkDisabled = ({label}) => {
 
 export default ({links = []}) => {
     if (links.length <= 3) return null;
-    links[0].label = 'Назад';
-    links[links.length - 1].label = 'Далее';
+    links[0].label = BACK;
+    links[links.length - 1].label = NEXT;
     return (
         <div className="mt-6 mb-1 flex flex-wrap w-75 mx-auto">
             {links.map(({active, label, url}) => {

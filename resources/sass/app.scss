@@ -1,9 +1,7 @@
 // Fonts
 //@import url('https://fonts.googleapis.com/css?family=Nunito');
-
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
@@ -11,4 +9,17 @@
 .no-resize {
     resize: none;
     overflow: auto;
-};
+}
+
+.nav-link {
+    color: white !important;
+}
+
+.nav-link:hover {
+    color: rgb(255, 56, 226) !important;
+}
+
+.nav-link.active {
+    color: rgb(255, 194, 255) !important;
+}
+

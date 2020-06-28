@@ -47,7 +47,6 @@ const ObjectArrayBody = ({data, action = null, hidden = []}) => {
         }
     };
 
-
     return (
         isObjectArray(data) && data.map((row, ind) =>
             <tr key={ind}>
@@ -55,7 +54,8 @@ const ObjectArrayBody = ({data, action = null, hidden = []}) => {
                     isNotHidden(hidden, key) && <td key={key}>{row[key]}</td>
                 ))}
                 <td>
-                    <button className={'btn btn-sm'} onClick={() => onActionClick(row)}>
+                    <button className={'btn btn-sm'} onClick={() => onActionClick(row)}
+                            title={'Редактирование (удаление, изменение)'}>
                         {getInlineSvg('edit', 18, 18, 'black')}
                     </button>
                 </td>
