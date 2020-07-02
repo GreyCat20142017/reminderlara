@@ -51,7 +51,7 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = []}) => {
     const [tagsChanged, setTagsChanged] = useState(false);
     const [tagsMode, setTagsMode] = useState(false);
 
-    const [currentRefs, setCurrentRefs] = useState([...refs]);
+    const [currentRefs, setCurrentRefs] = useState(refs.map(el => el['url']));
     const [refsChanged, setRefsChanged] = useState(false);
     const [refsMode, setRefsMode] = useState(false);
 
@@ -64,7 +64,7 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = []}) => {
             text,
             details,
             tags: tagsChanged ? currentTags.map(el => el.id) : false,
-            refs: refsChanged ? currentRefs.map(el => el.id) : false
+            refs: refsChanged ? currentRefs: false
         })
     };
 
@@ -76,6 +76,11 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = []}) => {
                 .then(() => {
                 })
         }
+    };
+
+    const editRefs = (evt) => {
+        evt.preventDefault();
+        setRefsMode(true);
     };
 
     return (
@@ -102,6 +107,11 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = []}) => {
                                       onChange={(evt) => setDetails(evt.target.value)}/>
                         </div>
 
+                        <button className='btn btn-sm btn-block btn-outline-secondary my-3' onClick={editRefs}
+                                title={'Просмотр и изменение полезных ссылок по теме'}>
+                            Полезные ссылки по теме:
+                        </button>
+
                         <div className={'btn-group d-flex justify-content-center'}>
                             <button className='btn btn-primary' type='submit' disabled={readOnly}
                                     title={'Сохранить изменения'}>
@@ -121,10 +131,7 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = []}) => {
                         <ItemTags tags={currentTags} setTagsMode={setTagsMode}/>
                     </div>
                 </form>
-                <button className='btn btn-sm btn-block btn-outline-secondary' onClick={() => setRefsMode(true)}
-                        title={'Просмотр и изменение полезных ссылок по теме'}>
-                    Полезные ссылки по теме:
-                </button>
+
 
                 {tagsMode && <EditTags setTagsMode={setTagsMode}
                                        currentTags={currentTags}

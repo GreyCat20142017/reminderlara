@@ -10,7 +10,7 @@ import {CONTENT_TITLES} from '../../constants';
 const Index = ({items, links, type = CONTENT_TYPES.MEMO}) => {
     const {data} = items;
 
-    const action = (row) => {
+    const onEdit = (row) => {
         Inertia.visit(`/items/${row['id']}/edit`, {...row})
     };
 
@@ -22,7 +22,7 @@ const Index = ({items, links, type = CONTENT_TYPES.MEMO}) => {
                     <InertiaLink href={`/items/${type}/create`} className='btn btn-primary'>Создать
                         элемент</InertiaLink>
                 </div>
-                <SimpleTable data={data} action={action} hiddenColumns={['user_id', 'type']}/>
+                <SimpleTable data={data} edit={onEdit} hiddenColumns={['user_id', 'type']}/>
                 <Pagination links={links}/>
             </div>
         </Layout>

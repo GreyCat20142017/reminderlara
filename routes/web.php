@@ -8,10 +8,8 @@
         return Inertia::render('Main');
     });
 
-    Route::get('/about', function () {
-        return Inertia::render('About');
-    });
 
+    Route::get('/search', 'SearchController@searchForm')->name('search');
 
     Auth::routes();
 

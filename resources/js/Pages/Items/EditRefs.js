@@ -79,7 +79,6 @@ const EditRefs = ({
         setAddMode(false);
     };
 
-
     return (
         <div className='mt-4 p-3 shadow-lg fixed-bottom bg-white container overflow-auto min-vh-100 text-center'>
             <h5>Полезные ссылки по теме</h5>
@@ -88,7 +87,7 @@ const EditRefs = ({
                 <button className={'btn btn-sm'} title={'Добавить'} onClick={addRef}>
                     +
                 </button>
-                <SimpleTable data={currentRefs} hiddenColumns={['id', 'item_id']}/>
+                <SimpleTable data={currentRefs} del={deleteRef} hiddenColumns={['id', 'item_id']}/>
                 <div className='d-flex justify-content-center flex-wrap'>
                     <button className='btn btn-sm btn-primary m-1' onClick={onSave} type={'button'}
                             title='сохранить изменения предварительно'>

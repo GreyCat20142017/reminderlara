@@ -6,6 +6,7 @@
     use App\Http\Requests\ItemRequest;
     use Illuminate\Http\Request;
     use Inertia\Inertia;
+    use PhpParser\Node\Expr\Array_;
 
     class ItemController extends Controller {
 
@@ -57,25 +58,19 @@
                 'text' => $request->text,
                 'details' => $request->details,
             ]);
-            if ($request['tags']) {
-                $item->tags()->detach();
-                $item->tags()->attach($request['tags']);
-            }
-            if ($request['refs']) {
-                $item->refs()->detach();
-                $item->refs()->attach($request['refs']);
-            }
+
+            $item->updateRelated($request['tags'], $request['refs']);
 
             return redirect()->route('items.index', ['type' => $item->type])->with('successMessage',
                 'Элемент успешно изменен!');
         }
 
         public function destroy(Item $item) {
-            $type = $item.type;
+            $type = $item . type;
             $item->delete();
 
             return redirect()->route('items.index', ['type' => $type])->with('successMessage',
                 'Элемент успешно удален!');
         }
 
-        }
+    }

@@ -8,7 +8,7 @@ import {InertiaLink} from '@inertiajs/inertia-react';
 const Index = ({tags, links}) => {
     const {data} = tags;
 
-    const action = (row) => {
+    const onEdit = (row) => {
         Inertia.visit(`tags/${row['id']}/edit`, {...row})
             .then(() => {
             })
@@ -21,7 +21,7 @@ const Index = ({tags, links}) => {
                 <div className='my-5'>
                     <InertiaLink href='/tags/create' className='btn btn-primary'>Создать тег</InertiaLink>
                 </div>
-                <SimpleTable data={data} action={action}/>
+                <SimpleTable data={data} edit={onEdit}/>
                 <Pagination links={links}/>
             </div>
         </Layout>

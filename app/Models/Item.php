@@ -29,11 +29,24 @@
         }
 
         public function refs() {
-            return $this->belongsToMany(Link::class);
+            return $this->hasMany(Link::class);
         }
 
         public function scopeOfType($query, $type) {
             return $query->where('type', $type);
         }
 
+
+        public function updateRelated($tags = null, $refs = null) {
+            if ($tags) {
+                $this->tags()->sync($tags);
+            }
+            if ($refs) {
+                $arr = array_map(function ($el) {
+                    return array('url' => $el);
+                }, $refs);
+                $this->refs()->delete();
+                $this->refs()->createMany($arr);
+            }
+        }
     }

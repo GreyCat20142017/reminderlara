@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {InertiaLink, usePage} from '@inertiajs/inertia-react';
 import {LoggedStatus} from '../Shared/LoggedStatus';
-import {CONTENT_TYPES} from '../constants';
+import {CONTENT_TYPES, PINK} from '../constants';
+import {getInlineSvg} from '../icons';
+import {isActive} from '../functions';
 
 export default function Layout({children}) {
     const {currentUser} = usePage();
@@ -27,8 +29,6 @@ export default function Layout({children}) {
                     </button>
                     <div className={modalClass} id='navbarNavAltMarkup'>
                         <div className='navbar-nav ml-auto'>
-                            <InertiaLink href='/about' className={'nav-item nav-link ' + activeClass('/about')}>О
-                                программе</InertiaLink>
                             <InertiaLink href={'/items/' + CONTENT_TYPES.NOTES}
                                          className={'nav-item nav-link ' + activeClass('/items/' + CONTENT_TYPES.NOTES)}
                                          title={'Заметки по популярным вопросам к собеседованию'}>
@@ -59,9 +59,20 @@ export default function Layout({children}) {
                 <div className='container'>
                     <LoggedStatus user={currentUser}/>
                     <div className='navbar-nav ml-auto'>
-                        <InertiaLink href='/tags' className='nav-item nav-link'>Теги</InertiaLink>
+
+                        <InertiaLink href='/search' className={'nav-item nav-link'} title={'Поиск'}>
+                            {getInlineSvg('search', 16, 16,
+                                isActive(active, '/search') ? PINK : 'white',
+                                isActive(active, '/search') ? PINK : 'white')}
+                        </InertiaLink>
+                        <InertiaLink href='/tags' className={'nav-item nav-link' + activeClass('/tags')}
+                                     title={'Список тегов'}>
+                            Теги
+                        </InertiaLink>
                         {(currentUser && currentUser['admin'] === 1) &&
-                        <InertiaLink href='/users' className='nav-item nav-link'>Пользователи</InertiaLink>
+                        <InertiaLink href='/users' className={'nav-item nav-link' + activeClass('/users')}>
+                            Пользователи
+                        </InertiaLink>
                         }
                     </div>
                 </div>

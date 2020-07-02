@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '@/Shared/Layout'
 
-const About = ({title = 'О программе'}) => {
+const SearchForm = ({title = 'Поиск'}) => {
     return (
         <Layout>
             <h1>{title}</h1>
@@ -10,4 +10,4 @@ const About = ({title = 'О программе'}) => {
     )
 };
 
-export default About;
+export default SearchForm;

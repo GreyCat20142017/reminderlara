@@ -1,5 +1,4 @@
 import React from 'react';
-import {SimpleArrayRow} from './SimpleArrayRow';
 import {getInlineSvg} from '../../icons';
 
 export const TABLE_TYPES = {
@@ -9,43 +8,72 @@ export const TABLE_TYPES = {
 };
 
 const EDIT_TITLE = 'изменить';
+const DELETE_TITLE = 'удалить';
 
 const isObjectArray = (data) => (data && Array.isArray(data) && data.length > 0 && typeof data[0] === 'object');
 
 const isNotHidden = (hidden, key) => (hidden && Array.isArray(hidden) && (hidden.indexOf(key) === -1));
 
+const notZero = (indexRow) => (indexRow || indexRow === 0);
+
+
+const Actions = ({edit, del, row = null}) => {
+    const onEditClick = (row) => {
+        if (edit && notZero(row)) {
+            edit(row)
+        }
+    };
+
+    const onDelClick = (row) => {
+        if (del && notZero(row)) {
+            del(row)
+        }
+    };
+    return (
+        (notZero(row)) ? <>
+            {edit && <td>
+                <button className={'btn btn-sm'} onClick={() => onEditClick(row)}
+                        title={'изменение'}>
+                    {getInlineSvg('edit', 18, 18, 'grey')}
+                </button>
+            </td>
+            }
+            {
+                del && <td>
+                    <button className={'btn btn-sm'} onClick={() => onDelClick(row)}
+                            title={'удаление'}>
+                        {getInlineSvg('del', 18, 18, 'grey')}
+                    </button>
+                </td>
+            }
+
+        </> : null
+    )
+};
+
 const ObjectArrayHeader = ({data, hidden = []}) => (
     isObjectArray(data) ?
-        <tr>
+        <>
             {Object.keys(data[0]).map((key) => (
                 isNotHidden(hidden, key) && <th key={key}>{key}</th>))
             }
-            <th>{EDIT_TITLE}</th>
-        </tr>
+        </>
         :
         null
 );
 
 const ArrayHeader = () => (
-    <tr>
-        <th className='th-sm font-weight-bold mdb-color'>Список</th>
-    </tr>
+    <th className='th-sm font-weight-bold'>Список</th>
 );
 
 const ObjectHeader = () => (
-    <tr>
-        <th className='th-sm font-weight-bold mdb-color'>Название поля</th>
-        <th className='th-sm font-weight-bold mdb-color'>Значение</th>
-        <th>{EDIT_TITLE}</th>
-    </tr>
+    <>
+        <th className='th-sm font-weight-bold'>Название поля</th>
+        <th className='th-sm font-weight-bold'>Значение</th>
+    </>
 );
 
-const ObjectArrayBody = ({data, action = null, hidden = []}) => {
-    const onActionClick = (row) => {
-        if (action && row) {
-            action(row)
-        }
-    };
+const ObjectArrayBody = ({data, edit = null, del = null, hidden = []}) => {
 
     return (
         isObjectArray(data) && data.map((row, ind) =>
@@ -53,31 +81,25 @@ const ObjectArrayBody = ({data, action = null, hidden = []}) => {
                 {Object.keys(row).map((key) => (
                     isNotHidden(hidden, key) && <td key={key}>{row[key]}</td>
                 ))}
-                <td>
-                    <button className={'btn btn-sm'} onClick={() => onActionClick(row)}
-                            title={'Редактирование (удаление, изменение)'}>
-                        {getInlineSvg('edit', 18, 18, 'black')}
-                    </button>
-                </td>
+                <Actions edit={edit} del={del} row={row}/>
             </tr>
         )
     );
 };
 
-export const ArrayBody = ({data}) => (
+export const ArrayBody = ({data, edit = null, del = null}) => (
     data.map((element, rowInd) => (
-        <tr className='d-flex align-items-center' key={rowInd}>
-            <td className='d-flex flex-grow-1 justify-content-between w-100'>
+        <tr key={rowInd}>
+            <td>
                 {element}
-                <button className={'btn btn-sm'}>
-                    {getInlineSvg('edit', 18, 18, 'black')}
-                </button>
+
             </td>
+            <Actions edit={edit} del={del} row={rowInd}/>
         </tr>
     ))
 );
 
-export const ObjectBody = ({data}) => {
+export const ObjectBody = ({data, edit = null, del = null}) => {
     const columns = Array.isArray(data) ? data : Object.keys(data);
     return (
         <>
@@ -85,50 +107,54 @@ export const ObjectBody = ({data}) => {
                 <tr key={ind}>
                     <td>{element}</td>
                     <td>{data[element]}</td>
-                    <td>
-                        <button className={'btn btn-sm ml-auto'}>
-                            {getInlineSvg('edit', 18, 18, 'black')}
-                        </button>
-                    </td>
+                    <Actions edit={edit} del={del} row={element}/>
                 </tr>
             ))}
 
         </>);
 };
 
-export const TableHeader = ({noHeader = false, data = [], hidden = []}) => {
+export const TableHeader = ({noHeader = false, data = [], hidden = [], actionHeaders}) => {
     const type = Array.isArray(data) ? (
             isObjectArray(data) ? TABLE_TYPES.OBJECTARRAY : TABLE_TYPES.ARRAY) :
         TABLE_TYPES.OBJECT;
     if (noHeader) return null;
-
     const components = {
         [TABLE_TYPES.ARRAY]: <ArrayHeader/>,
         [TABLE_TYPES.OBJECT]: <ObjectHeader/>,
-        [TABLE_TYPES.OBJECTARRAY]: <ObjectArrayHeader data={data} hidden={hidden}/>
+        [TABLE_TYPES.OBJECTARRAY]: <ObjectArrayHeader data={data} hidden={hidden} actionHeaders={actionHeaders}/>
     };
-    return <thead>{components[type] || null}</thead>
+    return (
+        <thead>
+        <tr>
+            {components[type] || null}
+            {actionHeaders['edit'] && <th>{EDIT_TITLE}</th>}
+            {actionHeaders['del'] && <th>{DELETE_TITLE}</th>}
+        </tr>
+        </thead>)
 };
 
 
-export const TableBody = ({data = [], action = null, hidden = []}) => {
+export const TableBody = ({data = [], edit = null, del = null, hidden = []}) => {
     const type = Array.isArray(data) ? (
             isObjectArray(data) ? TABLE_TYPES.OBJECTARRAY : TABLE_TYPES.ARRAY) :
         TABLE_TYPES.OBJECT;
 
+
     const components = {
-        [TABLE_TYPES.ARRAY]: <ArrayBody data={data} action={action}/>,
-        [TABLE_TYPES.OBJECT]: <ObjectBody data={data} action={action}/>,
-        [TABLE_TYPES.OBJECTARRAY]: <ObjectArrayBody data={data} action={action} hidden={hidden}/>
+        [TABLE_TYPES.ARRAY]: <ArrayBody data={data} edit={edit} del={del}/>,
+        [TABLE_TYPES.OBJECT]: <ObjectBody data={data} edit={edit} del={del}/>,
+        [TABLE_TYPES.OBJECTARRAY]: <ObjectArrayBody data={data} edit={edit} del={del} hidden={hidden}/>
     };
-    return <tbody>{components[type] || null}</tbody>
+    return <tbody className={'w-100'}>{components[type] || null}</tbody>
 };
 
 
-const SimpleTable = ({data, noHeader = false, type = TABLE_TYPES.ARRAY, action = null, hiddenColumns = []}) => (
+const SimpleTable = ({data, noHeader = false, type = TABLE_TYPES.ARRAY, edit = null, del = null, hiddenColumns = []}) => (
     <table className='table table-sm table-bordered w-100'>
-        <TableHeader data={data} noHeader={noHeader} hidden={hiddenColumns}/>
-        <TableBody data={data} action={action} hidden={hiddenColumns}/>
+        <TableHeader data={data} noHeader={noHeader} hidden={hiddenColumns}
+                     actionHeaders={{edit: !!edit, del: !!del}}/>
+        <TableBody data={data} edit={edit} del={del} hidden={hiddenColumns}/>
     </table>
 );
 

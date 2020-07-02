@@ -15,3 +15,6 @@ export const CONTENT_TITLES = {
 };
 
 export const ROW_COUNT = 7;
+
+
+export const PINK = "#FFC2FF";
