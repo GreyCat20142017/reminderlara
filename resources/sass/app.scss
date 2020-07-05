@@ -5,6 +5,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+body {
+    min-height: 100vh!important;
+}
 
 .no-resize {
     resize: none;
@@ -26,5 +29,12 @@
 .nav-link.active * {
     fill: rgb(255, 194, 255) !important;
     color: rgb(255, 194, 255) !important;
+}
+
+.nav-tabs .nav-link {
+   color: $primary!important;
+    &.active {
+        text-decoration: underline!important;
+    }
 }
 

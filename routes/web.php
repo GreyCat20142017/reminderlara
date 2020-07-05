@@ -10,6 +10,8 @@
 
 
     Route::get('/search', 'SearchController@searchForm')->name('search');
+    Route::get('/search/tag/{tag}', 'SearchController@searchByTag')->name('search.tag');
+    Route::get('/search/text/{text}', 'SearchController@searchByText')->name('search.text');
 
     Auth::routes();
 

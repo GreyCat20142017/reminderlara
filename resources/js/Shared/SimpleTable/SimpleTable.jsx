@@ -150,8 +150,8 @@ export const TableBody = ({data = [], edit = null, del = null, hidden = []}) => 
 };
 
 
-const SimpleTable = ({data, noHeader = false, type = TABLE_TYPES.ARRAY, edit = null, del = null, hiddenColumns = []}) => (
-    <table className='table table-sm table-bordered w-100'>
+const SimpleTable = ({data, noHeader = false,  edit = null, del = null, hiddenColumns = []}) => (
+    <table className='table table-sm table-bordered table-responsive'>
         <TableHeader data={data} noHeader={noHeader} hidden={hiddenColumns}
                      actionHeaders={{edit: !!edit, del: !!del}}/>
         <TableBody data={data} edit={edit} del={del} hidden={hiddenColumns}/>

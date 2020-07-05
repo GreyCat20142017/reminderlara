@@ -59,18 +59,16 @@ export default function Layout({children}) {
                 <div className='container'>
                     <LoggedStatus user={currentUser}/>
                     <div className='navbar-nav ml-auto'>
-
-                        <InertiaLink href='/search' className={'nav-item nav-link'} title={'Поиск'}>
-                            {getInlineSvg('search', 16, 16,
-                                isActive(active, '/search') ? PINK : 'white',
-                                isActive(active, '/search') ? PINK : 'white')}
+                        <InertiaLink href='/search'  className={'nav-item nav-link ' + activeClass('/search')} title={'Поиск'}>
+                            Поиск
                         </InertiaLink>
-                        <InertiaLink href='/tags' className={'nav-item nav-link' + activeClass('/tags')}
+
+                        <InertiaLink href='/tags' className={'nav-item nav-link ' + activeClass('/tags')}
                                      title={'Список тегов'}>
                             Теги
                         </InertiaLink>
                         {(currentUser && currentUser['admin'] === 1) &&
-                        <InertiaLink href='/users' className={'nav-item nav-link' + activeClass('/users')}>
+                        <InertiaLink href='/users' className={'nav-item nav-link ' + activeClass('/users')}>
                             Пользователи
                         </InertiaLink>
                         }

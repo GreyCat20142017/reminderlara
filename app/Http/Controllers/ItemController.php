@@ -6,16 +6,13 @@
     use App\Http\Requests\ItemRequest;
     use Illuminate\Http\Request;
     use Inertia\Inertia;
-    use PhpParser\Node\Expr\Array_;
 
     class ItemController extends Controller {
 
         public function index(String $type = 'MEMO') {
             $items = Item::ofType($type)->paginate(7);
-            $links = $items->links();
             return Inertia::render('Items/Index', [
                 'items' => $items,
-                'links' => $links,
                 'type' => $type
             ]);
         }

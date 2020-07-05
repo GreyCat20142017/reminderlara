@@ -7,8 +7,8 @@ import SimpleTable from '../../Shared/SimpleTable/SimpleTable';
 import {CONTENT_TITLES} from '../../constants';
 
 
-const Index = ({items, links, type = CONTENT_TYPES.MEMO}) => {
-    const {data} = items;
+const Index = ({items, type = CONTENT_TYPES.MEMO}) => {
+    const {data, links} = items;
 
     const onEdit = (row) => {
         Inertia.visit(`/items/${row['id']}/edit`, {...row})
