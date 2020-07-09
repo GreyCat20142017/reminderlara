@@ -5,11 +5,12 @@ import {Inertia} from '@inertiajs/inertia';
 
 const TABS = {tag: 'по тегу', text: 'по тексту'};
 
-const SearchForm = ({title = 'Поиск', allTags = []}) => {
-    const [activeTab, setActiveTab] = useState(TABS.tag);
+const TABS_ARRAY = [TABS.tag, TABS.text];
+
+const SearchForm = ({title = 'Поиск', allTags = [], tab = 1}) => {
+    const [activeTab, setActiveTab] = useState(TABS_ARRAY[ parseInt(tab) - 1]);
     const [tag, setTag] = useState(null);
     const [text, setText] = useState('');
-
 
     const onTagClick = (ind) => {
         setTag(allTags[ind]);
@@ -17,13 +18,13 @@ const SearchForm = ({title = 'Поиск', allTags = []}) => {
 
     const searchByTag = () => {
         if (tag) {
-         Inertia.visit(`/search/tag/${tag['id']}`);
+            Inertia.visit(`/search/tag/${tag['id']}`);
         }
     };
 
     const searchByText = () => {
         if (text) {
-         Inertia.visit(`/search/text/${text}`);
+            Inertia.visit(`/search/text/${text}`);
         }
     };
 

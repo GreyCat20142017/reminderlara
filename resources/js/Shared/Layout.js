@@ -55,11 +55,12 @@ export default function Layout({children}) {
                     {children}
                 </div>
             </section>
-            <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
+            <nav className='navbar navbar-expand navbar-dark bg-primary'>
                 <div className='container'>
                     <LoggedStatus user={currentUser}/>
                     <div className='navbar-nav ml-auto'>
-                        <InertiaLink href='/search'  className={'nav-item nav-link ' + activeClass('/search')} title={'Поиск'}>
+                        <InertiaLink href='/search' className={'nav-item nav-link ' + activeClass('/search')}
+                                     title={'Поиск по тегу или тексту'}>
                             Поиск
                         </InertiaLink>
 
@@ -68,7 +69,8 @@ export default function Layout({children}) {
                             Теги
                         </InertiaLink>
                         {(currentUser && currentUser['admin'] === 1) &&
-                        <InertiaLink href='/users' className={'nav-item nav-link ' + activeClass('/users')}>
+                        <InertiaLink href='/users' className={'nav-item nav-link ' + activeClass('/users')}
+                                     title={'Список пользователей'}>
                             Пользователи
                         </InertiaLink>
                         }

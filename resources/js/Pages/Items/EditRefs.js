@@ -84,11 +84,17 @@ const EditRefs = ({
             <h5>Полезные ссылки по теме</h5>
             {!addMode &&
             <>
-                <button className={'btn btn-sm'} title={'Добавить'} onClick={addRef}>
-                    +
+
+                {currentRefs && currentRefs.length > 0 ?
+                    <SimpleTable data={currentRefs} del={deleteRef} hiddenColumns={['id', 'item_id']}/> :
+                    <p className='text-primary my-2'>пока нет добавленных ссылок</p>
+                }
+
+                <button className='btn btn-sm btn-outline-primary mt-1' title={'Добавить'} onClick={addRef}>
+                    добавить ссылку
                 </button>
-                <SimpleTable data={currentRefs} del={deleteRef} hiddenColumns={['id', 'item_id']}/>
-                <div className='d-flex justify-content-center flex-wrap'>
+
+                <div className='mt-2 d-flex justify-content-center flex-wrap'>
                     <button className='btn btn-sm btn-primary m-1' onClick={onSave} type={'button'}
                             title='сохранить изменения предварительно'>
                         сохранить изменения

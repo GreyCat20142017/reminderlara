@@ -115,7 +115,7 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = []}) => {
                         <div className={'btn-group d-flex justify-content-center'}>
                             <button className='btn btn-primary' type='submit' disabled={readOnly}
                                     title={'Сохранить изменения'}>
-                                <span>Изменить</span>
+                                <span>Сохранить</span>
                             </button>
                             <button className='btn btn-danger ml-3' onClick={deleteTag} disabled={readOnly}
                                     title={'Удалить тег'}>

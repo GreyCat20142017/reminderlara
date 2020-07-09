@@ -151,11 +151,13 @@ export const TableBody = ({data = [], edit = null, del = null, hidden = []}) => 
 
 
 const SimpleTable = ({data, noHeader = false,  edit = null, del = null, hiddenColumns = []}) => (
-    <table className='table table-sm table-bordered table-responsive'>
+    <div className="table-responsive">
+    <table className='table table-sm table-bordered table-hover'>
         <TableHeader data={data} noHeader={noHeader} hidden={hiddenColumns}
                      actionHeaders={{edit: !!edit, del: !!del}}/>
         <TableBody data={data} edit={edit} del={del} hidden={hiddenColumns}/>
     </table>
+    </div>
 );
 
 export default SimpleTable;

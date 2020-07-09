@@ -6,7 +6,7 @@ import Pagination from '@/Shared/Pagination';
 import Layout from '../../Shared/Layout';
 import SimpleTable, {TABLE_TYPES} from '../../Shared/SimpleTable/SimpleTable';
 
-const SearchResult = ({items,  title}) => {
+const SearchResult = ({items, title, tab = 1}) => {
     const {data, links} = items;
 
     const onEdit = (row) => {
@@ -24,7 +24,7 @@ const SearchResult = ({items,  title}) => {
                     </> :
                     <p className='m-2 text-primary'>данных по указанным критериям поиска не найдено</p>
                 }
-                <InertiaLink href='/search' className='btn btn-secondary ml-2'>Назад</InertiaLink>
+                <InertiaLink href={`/search/${tab}`} className='btn btn-secondary ml-2'>Назад</InertiaLink>
             </div>
         </Layout>
     )

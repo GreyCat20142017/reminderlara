@@ -18,9 +18,10 @@ const Index = ({items, type = CONTENT_TYPES.MEMO}) => {
         <Layout>
             <div className="container">
                 <h4>{CONTENT_TITLES[type]}</h4>
-                <div className='my-5'>
-                    <InertiaLink href={`/items/${type}/create`} className='btn btn-primary'>Создать
+                <div className='my-3'>
+                    <InertiaLink href={`/items/${type}/create`} className='btn btn-outline-primary'>Создать
                         элемент</InertiaLink>
+                    <InertiaLink href={`/viewer/${type}`} className='btn btn-outline-primary'>Просмотр</InertiaLink>
                 </div>
                 <SimpleTable data={data} edit={onEdit} hiddenColumns={['user_id', 'type']}/>
                 <Pagination links={links}/>
