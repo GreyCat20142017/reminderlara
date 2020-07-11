@@ -5,14 +5,14 @@ import SimpleTable from '../../Shared/SimpleTable/SimpleTable';
 import {Inertia} from '@inertiajs/inertia';
 import {InertiaLink} from '@inertiajs/inertia-react';
 
-const Index = ({tags, links}) => {
+const Index = ({tags, links, successMessage}) => {
     const {data} = tags;
 
     const onEdit = (row) => {
         Inertia.visit(`tags/${row['id']}/edit`, {...row})
             .then(() => {
             })
-    }
+    };
 
     return (
         <Layout>
@@ -23,6 +23,8 @@ const Index = ({tags, links}) => {
                 </div>
                 <SimpleTable data={data} edit={onEdit}/>
                 <Pagination links={links}/>
+                <hr/>
+                <p className='text-info'>{successMessage}</p>
             </div>
         </Layout>
     )

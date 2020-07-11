@@ -2,11 +2,11 @@
 
     use Inertia\Inertia;
 
-    Route::redirect('/logout', '/about');
+    Route::redirect('/logout', '/');
 
     Route::get('/', function () {
         return Inertia::render('Main');
-    });
+    })->name('home');
 
 
     Route::get('/search/{tab?}', 'SearchController@searchForm')->name('search')->where('tab', '[1-2]');
@@ -16,6 +16,7 @@
     Route::get('/viewer/{type?}', 'SearchController@viewer')->name('viewer')->where('type', 'MEMO|NOTES');
 
     Auth::routes();
+
 
     Route::middleware(['auth'])->group(function () {
 

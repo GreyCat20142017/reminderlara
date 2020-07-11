@@ -40,7 +40,10 @@ export default function Layout({children}) {
                                 Проблемы
                             </InertiaLink>
                             {!currentUser &&
-                            <InertiaLink href='/login' className='nav-item nav-link'>Вход</InertiaLink>}
+                            <>
+                                <InertiaLink href='/login' className='nav-item nav-link'>Вход</InertiaLink>
+                                <InertiaLink href='/register' className='nav-item nav-link'>Регистрация</InertiaLink>
+                            </>}
                             {currentUser &&
                             <InertiaLink href='/logout' method='post'
                                          className='nav-item nav-link'>Выход</InertiaLink>}

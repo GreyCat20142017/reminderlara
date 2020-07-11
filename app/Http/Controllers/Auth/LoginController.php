@@ -73,7 +73,7 @@
         protected $redirectTo = '/';
 
         public function showLoginForm() {
-            return Inertia::render('Login');
+            return Inertia::render('Auth/Login');
         }
 
 
@@ -87,7 +87,7 @@
 
         public function logout(Request $request) {
             Auth::logout();
-            return Inertia::render('About', [
+            return Inertia::render('Main', [
                 'user' => Auth::user(),
             ]);
 

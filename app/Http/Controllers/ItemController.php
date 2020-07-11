@@ -9,8 +9,10 @@
 
     class ItemController extends Controller {
 
+        const PAGE_LIMIT = 7;
+
         public function index(String $type = 'MEMO') {
-            $items = Item::ofType($type)->paginate(7);
+            $items = Item::ofType($type)->paginate(self::PAGE_LIMIT);
             return Inertia::render('Items/Index', [
                 'items' => $items,
                 'type' => $type
@@ -18,52 +20,60 @@
         }
 
         public function create(Request $request) {
-            return Inertia::render('Items/Create', ['type' => $request->type]);
+            $referer = request()->headers->get('referer');
+            return Inertia::render('Items/Create', [
+                'type' => $request->type,
+                'referer' => $referer
+            ]);
         }
 
         public function store(ItemRequest $request) {
+            $url = $request['referer'] ?? route('items.index', ['type' => $request->type]);
             Item::create([
                 'text' => $request->text,
                 'details' => $request->details,
                 'type' => $request->type
             ]);
 
-            return redirect()->route('items.index', ['type' => $request->type])->with('successMessage',
+            return redirect($url)->with('successMessage',
                 'Элемент успешно добавлен!');
         }
 
         public function show(Item $item) {
+            $referer = request()->headers->get('referer');
             return Inertia::render('Items/Edit', [
                 'item' => $item,
                 'tags' => $item->tags()->get()->toArray(),
                 'refs' => $item->refs()->get()->toArray(),
-                'readOnly' => true
+                'readOnly' => true,
+                'referer' => $referer
             ]);
         }
 
         public function edit(Item $item) {
+            $referer = request()->headers->get('referer');
             return Inertia::render('Items/Edit', [
                 'item' => $item,
                 'tags' => $item->tags()->get()->toArray(),
-                'refs' => $item->refs()->get()->toArray()
+                'refs' => $item->refs()->get()->toArray(),
+                'referer' => $referer
             ]);
         }
 
         public function update(ItemRequest $request, Item $item) {
+            $url = $request['referer'] ?? route('items.index', ['type' => $item->type]);
 
             $item->update([
                 'text' => $request->text,
                 'details' => $request->details,
             ]);
-
             $item->updateRelated($request['tags'], $request['refs']);
 
-            return redirect()->route('items.index', ['type' => $item->type])->with('successMessage',
-                'Элемент успешно изменен!');
+            return redirect($url)->with('successMessage', 'Элемент успешно изменен!');
         }
 
         public function destroy(Item $item) {
-            $type = $item . type;
+            $type = $item->type;
             $item->delete();
 
             return redirect()->route('items.index', ['type' => $type])->with('successMessage',

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Inertia, InertiaLink} from '@inertiajs/inertia';
 import {usePage} from '@inertiajs/inertia-react';
-import Layout from '../Shared/Layout';
-import Errors from '../Shared/Errors';
+import Layout from '../../Shared/Layout';
+import Errors from '../../Shared/Errors';
 
 const Login = () => {
     const {errors} = usePage();
@@ -26,7 +26,6 @@ const Login = () => {
         e.preventDefault();
         setSending(true);
         Inertia.post('/login', values);
-
     };
 
     return (
@@ -37,7 +36,7 @@ const Login = () => {
                     <div className='col-12 d-flex flex-column mt-2'>
                         <label className='text-left' htmlFor='email'>Логин</label>
                         <input className='form-control '
-                               type='text' name='email' placeholder='Логин' id='email' required
+                               type='email' name='email' placeholder='Логин' id='email' required
                                value={values.email} onChange={onInputChange}/>
                         <span className='invalid-feedback'></span>
                     </div>

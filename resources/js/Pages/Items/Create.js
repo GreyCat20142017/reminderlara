@@ -6,7 +6,7 @@ import Errors from '@/Shared/Errors';
 import {CONTENT_TITLES, CONTENT_TYPES} from '../../constants';
 import {getPageTitle} from '../../functions';
 
-export default function Create({errors, type = CONTENT_TYPES.MEMO}) {
+export default function Create({errors, type = CONTENT_TYPES.MEMO, referer}) {
 
     const [text, setText] = useState('');
     const [details, setDetails] = useState('');
@@ -17,7 +17,8 @@ export default function Create({errors, type = CONTENT_TYPES.MEMO}) {
         Inertia.post('/items', {
             text,
             details,
-            type
+            type,
+            referer
         });
     };
 
@@ -46,7 +47,7 @@ export default function Create({errors, type = CONTENT_TYPES.MEMO}) {
                         <button type="submit" className="btn btn-primary" title={'Создать и сохранить'}>
                             Создать элемент
                         </button>
-                        <InertiaLink href={`/items/${type}`} className='btn btn-secondary ml-2'
+                        <InertiaLink href={referer || `/items/${type}`} className='btn btn-secondary ml-2'
                                      title={'Вернуться к предыдущему экрану'}>
                             Назад
                         </InertiaLink>

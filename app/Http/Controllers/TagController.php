@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
 
+    use App\Helpers\Helper;
     use App\Http\Requests\TagRequest;
     use App\Models\Tag;
     use Inertia\Inertia;
@@ -27,7 +28,8 @@
                 'name' => $request->name
             ]);
 
-            return redirect()->route('tags.index')->with('successMessage', 'Тег успешно добавлен!');
+            return redirect()->route('tags.index')->with('successMessage',
+                'Тег ' . Helper::getWrapped($request->name) . ' успешно добавлен!');
         }
 
         public function show(Tag $tag) {
@@ -50,7 +52,8 @@
                 'name' => $request->name
             ]);
 
-            return redirect()->route('tags.index')->with('successMessage', 'Тег успешно изменен!');
+            return redirect()->route('tags.index')->with('successMessage',
+                'Тег ' . Helper::getWrapped($request->name) . ' успешно изменен!');
         }
 
         public function destroy(Tag $tag) {

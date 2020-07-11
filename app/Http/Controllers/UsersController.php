@@ -43,7 +43,7 @@ class UsersController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:5'
+            'password' => 'required|min:2'
         ]);
 
         User::create([
@@ -52,7 +52,7 @@ class UsersController extends Controller
             'password' => bcrypt($request->password)
         ]);
 
-        return redirect()->route('users.index')->with('successMessage', 'User was successfully added!');
+        return redirect()->route('users.index')->with('successMessage', 'Пользователь был успешно добавлен');
     }
 
     /**
@@ -98,7 +98,7 @@ class UsersController extends Controller
             'email' => $request->email
         ]);
 
-        return redirect()->route('users.index')->with('successMessage', 'User was successfully updated!');
+        return redirect()->route('users.index')->with('successMessage', 'Пользователь был успешно обновлен!');
     }
 
     /**

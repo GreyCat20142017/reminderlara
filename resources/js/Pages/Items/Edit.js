@@ -43,7 +43,7 @@ const ItemTags = ({tags, setTagsMode}) => {
     )
 };
 
-export default ({errors, allTags, item, tags, readOnly = false, refs = []}) => {
+export default ({errors, allTags, item, tags, readOnly = false, refs = [], referer}) => {
     const [text, setText] = useState(item['text']);
     const [details, setDetails] = useState(item['details']);
 
@@ -64,7 +64,8 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = []}) => {
             text,
             details,
             tags: tagsChanged ? currentTags.map(el => el.id) : false,
-            refs: refsChanged ? currentRefs: false
+            refs: refsChanged ? currentRefs : false,
+            referer: referer
         })
     };
 
@@ -121,7 +122,8 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = []}) => {
                                     title={'Удалить тег'}>
                                 Удалить
                             </button>
-                            <InertiaLink className='btn btn-secondary text-white ml-3' href={`/items/${type}`}
+                            <InertiaLink className='btn btn-secondary text-white ml-3'
+                                         href={referer || `/items/${type}`}
                                          title={'Вернуться к предыдущему экрану без сохранения изменений'}>
                                 Назад
                             </InertiaLink>
