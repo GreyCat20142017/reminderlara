@@ -16,7 +16,7 @@ const Index = ({items, type = CONTENT_TYPES.MEMO}) => {
 
     return (
         <Layout>
-            <div className="container">
+            <div className="container" >
                 <h4>{CONTENT_TITLES[type]}</h4>
                 <hr/>
                 <div className='my-3'>

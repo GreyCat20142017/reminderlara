@@ -5,43 +5,10 @@ import Layout from '@/Shared/Layout'
 import Errors from '@/Shared/Errors';
 import EditTags from './EditTags';
 import {CONTENT_TYPES} from '../../constants';
-import {getPageTitle, isNotEmptyArray} from '../../functions';
-import SimpleTable from '../../Shared/SimpleTable/SimpleTable';
+import {getPageTitle} from '../../functions';
 import EditRefs from './EditRefs';
+import {ItemTags} from './ItemTags';
 
-
-const TagList = ({tags}) => (
-    <div className='d-flex flex-wrap  justify-content-center w-100'>
-        {tags.map((tag, ind) =>
-            <span className='p-1 m-1 btn btn-sm btn-outline-primary' key={ind}>
-                {tag['name'] || ''}
-            </span>)}
-    </div>
-);
-
-const ItemTags = ({tags, setTagsMode}) => {
-
-    const onButtonClick = (evt) => {
-        evt.preventDefault();
-        setTagsMode(true);
-    }
-
-    return (
-        <>
-            <h5 className='text-primary mt-2 mt-md-0'>Теги</h5>
-            {isNotEmptyArray(tags) ?
-                <TagList tags={tags}/> :
-                <p className='m-1 p-0 text-primary'>
-                    <small>нет привязанных тегов</small>
-                </p>
-            }
-            <button className="btn btn-sm btn-primary mx-1 mb-1 mt-3" onClick={onButtonClick}
-                    title={'добавить/удалить теги в список'}>
-                выбор тегов
-            </button>
-        </>
-    )
-};
 
 export default ({errors, allTags, item, tags, readOnly = false, refs = [], referer}) => {
     const [text, setText] = useState(item['text']);
@@ -69,7 +36,7 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = [], refer
         })
     };
 
-    const deleteTag = evt => {
+    const deleteItem = evt => {
         evt.preventDefault();
 
         if (confirm('Вы действительно хотите удалить элемент?')) {
@@ -118,8 +85,8 @@ export default ({errors, allTags, item, tags, readOnly = false, refs = [], refer
                                     title={'Сохранить изменения'}>
                                 <span>Сохранить</span>
                             </button>
-                            <button className='btn btn-danger ml-3' onClick={deleteTag} disabled={readOnly}
-                                    title={'Удалить тег'}>
+                            <button className='btn btn-danger ml-3' onClick={deleteItem} disabled={readOnly}
+                                    title={'Удалить элемент'}>
                                 Удалить
                             </button>
                             <InertiaLink className='btn btn-secondary text-white ml-3'

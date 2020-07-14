@@ -29,11 +29,13 @@
 
         public function store(ItemRequest $request) {
             $url = $request['referer'] ?? route('items.index', ['type' => $request->type]);
-            Item::create([
+            $item = Item::create([
                 'text' => $request->text,
                 'details' => $request->details,
                 'type' => $request->type
             ]);
+
+            $item->updateRelated($request['tags'], $request['refs']);
 
             return redirect($url)->with('successMessage',
                 'Элемент успешно добавлен!');

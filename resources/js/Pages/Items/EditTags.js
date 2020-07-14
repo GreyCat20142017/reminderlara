@@ -36,14 +36,13 @@ export default ({currentTags, setCurrentTags, allTags, setTagsMode, isChanged}) 
     };
 
     const deleteFromCurrent = (ind) => {
-        const el = {...current[ind]};
-        setCurrent([...current.filter((el, index) => ind !== index)]);
+        setCurrent(current.filter((el, index) => ind !== index));
         setAll([...all, {...el}])
     };
 
     const addToCurrent = (ind) => {
         const el = {...all[ind]};
-        setAll([...all.filter((el, index) => ind !== index)]);
+        setAll(all.filter((el, index) => ind !== index));
         setCurrent([...current, {...el}]);
     };
 

@@ -16,8 +16,8 @@ export default function Layout({children}) {
     const activeClass = (href) => (active && active.startsWith(href) ? 'active' : '');
 
     return (
-        <main style={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
-            <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
+        <main style={{minHeight: '100vh',  display: 'flex', flexDirection: 'column'}}>
+            <nav className='navbar navbar-expand-lg navbar-dark bg-primary fixed-top'>
                 <div className='container'>
                     <a className='navbar-brand' href='/'
                        title={'Перейти на главную страницу Reminder-Lara'}>Reminder</a>
@@ -53,12 +53,14 @@ export default function Layout({children}) {
                 </div>
             </nav>
 
-            <section style={{flexGrow: 1}}>
-                <div className='container p-2'>
+
+            <section className='container flex-grow-1'  style={{padding: '50px 20px'}}>
+                <div className="overflow-auto py-3">
                     {children}
                 </div>
             </section>
-            <nav className='navbar navbar-expand navbar-dark bg-primary'>
+
+            <nav className='navbar navbar-expand navbar-dark bg-primary fixed-bottom'>
                 <div className='container'>
                     <LoggedStatus user={currentUser}/>
                     <div className='navbar-nav ml-auto'>

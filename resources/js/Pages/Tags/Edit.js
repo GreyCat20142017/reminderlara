@@ -1,9 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import {Inertia} from '@inertiajs/inertia'
-import Layout from '@/Shared/Layout'
 import {InertiaLink} from '@inertiajs/inertia-react';
 
-const Edit = ({errors, tag, readOnly = false}) => {
+import Layout from '@/Shared/Layout'
+
+const Edit = ({errors, tag, readOnly = false, referer}) => {
     const [name, setName] = useState(tag.name);
     const [error, setError] = useState(null);
 
@@ -11,7 +12,8 @@ const Edit = ({errors, tag, readOnly = false}) => {
     const update = evt => {
         evt.preventDefault();
         Inertia.patch(`/tags/${tag['id']}`, {
-            name
+            name,
+            referer
         })
     }
 
@@ -26,7 +28,6 @@ const Edit = ({errors, tag, readOnly = false}) => {
                 .catch(err => setError(err.message));
         }
     };
-
 
     return (
         <Layout>
@@ -56,7 +57,7 @@ const Edit = ({errors, tag, readOnly = false}) => {
                                     title={'Удалить тег'}>
                                 Удалить
                             </button>
-                            <InertiaLink className='btn btn-secondary text-white ml-3' href='/tags'
+                            <InertiaLink className='btn btn-secondary text-white ml-3' href={referer || '/tags'}
                                          title={'Вернуться к предыдущему экрану без сохранения изменений'}>
                                 Назад
                             </InertiaLink>
