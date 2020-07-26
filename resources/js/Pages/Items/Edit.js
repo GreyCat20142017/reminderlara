@@ -4,8 +4,8 @@ import {InertiaLink} from '@inertiajs/inertia-react';
 import Layout from '@/Shared/Layout'
 import Errors from '@/Shared/Errors';
 import EditTags from './EditTags';
-import {CONTENT_TYPES} from '../../constants';
-import {getPageTitle} from '../../functions';
+import {CONTENT_TYPES} from '@/constants';
+import {getPageTitle} from '@/functions';
 import EditRefs from './EditRefs';
 import {ItemTags} from './ItemTags';
 

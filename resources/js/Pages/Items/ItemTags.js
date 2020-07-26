@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {isNotEmptyArray} from '../../functions';
+import {isNotEmptyArray} from '@/functions';
 
 const TagList = ({tags}) => (
     <div className='d-flex flex-wrap  justify-content-center w-100'>

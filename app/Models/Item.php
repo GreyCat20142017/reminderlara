@@ -36,6 +36,13 @@
             return $query->where('type', $type);
         }
 
+        public function scopeOfTag($query, $tag) {
+            return $tag->exists ?
+                $query->whereHas('tags', function ($query) use ($tag) {
+                    $query->where('tags.id', $tag->id);
+                }) :
+                $query;
+        }
 
         public function updateRelated($tags = null, $refs = null) {
             if ($tags) {

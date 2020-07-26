@@ -3,9 +3,10 @@ import {Inertia} from '@inertiajs/inertia';
 
 import Layout from '@/Shared/Layout'
 import Pagination from '@/Shared/Pagination';
-import Refs from '../../Shared/Refs';
-import {isNotEmptyArray, isValidIndex} from '../../functions';
-import {CONTENT_TITLES, CONTENT_TYPES} from '../../constants';
+import Refs from '@/Shared/Refs';
+import FilterByTag from '@/Shared/Filter/FilterByTag';
+import {isNotEmptyArray, isValidIndex} from '@/functions';
+import {CONTENT_TITLES, CONTENT_TYPES} from '@/constants';
 
 const changePage = (active, links, direction = 1) => {
     if (active && active['label']) {
@@ -39,9 +40,10 @@ const ItemViewer = ({item}) => {
     )
 };
 
-const Viewer = ({items, type, referer}) => {
+const Viewer = ({items, type, referer, allTags, filterTitle}) => {
     const {data, links} = items;
-    const [current, setCurrent] = useState(getInitialIndex(links, referer, data.length));
+    const [filterMode, setFilterMode] = useState(false);
+    const [current, setCurrent] = useState(getInitialIndex(links, referer, data ? data.length : 0));
     const suffix = (type === CONTENT_TYPES.MEMO) ? 'ая' : 'ий';
 
     const active = links.find(el => el.active);
@@ -63,30 +65,54 @@ const Viewer = ({items, type, referer}) => {
         }
     };
 
+    const onFilter = (id = null) => {
+        setFilterMode(false);
+        setCurrent(0);
+        Inertia.visit(id ? `/viewer/${type}/${id}` : `/viewer/${type}`);
+    };
+
+    const onShowFilter = () => setFilterMode(true);
+
+    const title = `Сквозной просмотр списка ${CONTENT_TITLES[type].split(' ').pop()}`;
+
     return (
         <Layout>
             <div className='container text-align-center my-2'>
-                <h4 className='text-primary'>Сквозной просмотр списка {CONTENT_TITLES[type].split(' ').pop()}</h4>
-                <hr/>
-                {
-                    (isNotEmptyArray(data) && isValidIndex(current, data)) ?
-                        <>
-                            <ItemViewer item={data[current]}/>
-                            <div className='my-3'>
-                                <button className='btn btn-sm  btn-outline-primary' onClick={goPrev}
-                                        title={`предыдущ${suffix} элемент`}>
-                                    предыдущ{suffix}
-                                </button>
-                                <button className='btn btn-sm btn-outline-primary ml-1' onClick={goNext}
-                                        title={`следующ${suffix} элемент`}>
-                                    следующ{suffix}
-                                </button>
-                                <span className='btn btn-sm text-primary ml-2'>{current + 1} из {data.length}</span>
-                            </div>
-                            <hr/>
-                            <Pagination links={links}/>
-                        </> :
-                        <p>нет данных</p>
+
+                {filterMode ?
+                    <FilterByTag allTags={allTags} setFilterMode={setFilterMode}
+                                 title={title} onFilter={onFilter}/>
+                    :
+                    <>
+                        <h4 className='text-primary'>{title}</h4>
+                        <h6>Фильтр: {filterTitle}</h6>
+                        <button className='btn btn-sm btn-block btn-outline-primary mt-3' onClick={onShowFilter}
+                                title={'Выбрать фильтр по тегу'}>
+                            Фильтр
+                        </button>
+                        <hr/>
+                        {
+                            (isNotEmptyArray(data) && isValidIndex(current, data)) ?
+                                <>
+                                    <ItemViewer item={data[current]}/>
+                                    <div className='my-3'>
+                                        <button className='btn btn-sm  btn-outline-primary' onClick={goPrev}
+                                                title={`предыдущ${suffix} элемент`}>
+                                            предыдущ{suffix}
+                                        </button>
+                                        <button className='btn btn-sm btn-outline-primary ml-1' onClick={goNext}
+                                                title={`следующ${suffix} элемент`}>
+                                            следующ{suffix}
+                                        </button>
+                                        <span
+                                            className='btn btn-sm text-primary ml-2'>{current + 1} из {data.length}</span>
+                                    </div>
+                                    <hr/>
+                                    <Pagination links={links}/>
+                                </> :
+                                <p>нет данных</p>
+                        }
+                    </>
                 }
             </div>
         </Layout>

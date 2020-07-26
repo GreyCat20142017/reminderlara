@@ -29,12 +29,12 @@ export default function Layout({children}) {
                     </button>
                     <div className={modalClass} id='navbarNavAltMarkup'>
                         <div className='navbar-nav ml-auto'>
-                            <InertiaLink href={'/items/' + CONTENT_TYPES.NOTES}
+                            <InertiaLink href={`/items/${CONTENT_TYPES.NOTES}`}
                                          className={'nav-item nav-link ' + activeClass('/items/' + CONTENT_TYPES.NOTES)}
                                          title={'Заметки по популярным вопросам к собеседованию'}>
                                 Вопросы
                             </InertiaLink>
-                            <InertiaLink href={'/items/' + CONTENT_TYPES.MEMO}
+                            <InertiaLink href={`/items/${CONTENT_TYPES.MEMO}`}
                                          className={'nav-item nav-link ' + activeClass('/items/' + CONTENT_TYPES.MEMO)}
                                          title={'Грабли и проблемы, а также возможные пути их решения'}>
                                 Проблемы

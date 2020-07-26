@@ -37,15 +37,16 @@
             ]);
         }
 
-        public function viewer(String $type = 'MEMO') {
-            $items = Item::ofType($type)->with('refs')->paginate(self::PAGE_LIMIT)->onEachSide(3);
+        public function viewer(String $type = 'MEMO', Tag $tag) {
+            $items = Item::ofType($type)->ofTag($tag)->with('refs')->paginate(self::PAGE_LIMIT)->onEachSide(3);
             $referer = request()->headers->get('referer');
 
             return Inertia::render('Viewer/Viewer', [
                 'items' => $items,
                 'type' => $type,
                 'referer' => $referer,
-                'pageLimit' => self::PAGE_LIMIT
+                'pageLimit' => self::PAGE_LIMIT,
+                'filterTitle' => $tag->exists ? 'по тегу ' . $tag->name : 'все записи'
             ]);
         }
     }

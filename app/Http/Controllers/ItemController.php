@@ -3,6 +3,7 @@
     namespace App\Http\Controllers;
 
     use App\Models\Item;
+    use App\Models\Tag;
     use App\Http\Requests\ItemRequest;
     use Illuminate\Http\Request;
     use Inertia\Inertia;
@@ -11,11 +12,12 @@
 
         const PAGE_LIMIT = 7;
 
-        public function index(String $type = 'MEMO') {
-            $items = Item::ofType($type)->paginate(self::PAGE_LIMIT);
+        public function index(String $type = 'MEMO', Tag $tag) {
+            $items = Item::ofType($type)->ofTag($tag)->paginate(self::PAGE_LIMIT);
             return Inertia::render('Items/Index', [
                 'items' => $items,
-                'type' => $type
+                'type' => $type,
+                'filterTitle' => $tag->exists ? 'по тегу ' . $tag->name : 'все записи'
             ]);
         }
 

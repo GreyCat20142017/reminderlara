@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Inertia} from '@inertiajs/inertia';
 import {InertiaLink} from '@inertiajs/inertia-react';
+
 import Layout from '@/Shared/Layout';
 import Errors from '@/Shared/Errors';
 import {CONTENT_TITLES, CONTENT_TYPES} from '../../constants';

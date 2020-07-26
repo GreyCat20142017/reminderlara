@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Inertia, InertiaLink} from '@inertiajs/inertia';
 import {usePage} from '@inertiajs/inertia-react';
-import Layout from '../../Shared/Layout';
-import Errors from '../../Shared/Errors';
+import Layout from '@/Shared/Layout';
+import Errors from '@/Shared/Errors';
 
 const Registration = () => {
     const {errors} = usePage();
