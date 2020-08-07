@@ -8,13 +8,11 @@ export const CONTENT_TYPES = {
     NOTES: 'NOTES'
 };
 
-
 export const CONTENT_TITLES = {
     [CONTENT_TYPES.MEMO]: 'Список проблем',
     [CONTENT_TYPES.NOTES]: 'Список вопросов'
 };
 
 export const ROW_COUNT = 7;
-
 
 export const PINK = "#FFC2FF";

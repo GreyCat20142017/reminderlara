@@ -13,7 +13,8 @@
     Route::get('/search/tag/{tag}', 'SearchController@searchByTag')->name('search.tag');
     Route::get('/search/text/{text}', 'SearchController@searchByText')->name('search.text');
 
-    Route::get('/viewer/{type}/{tag}', 'SearchController@viewer')->name('viewer')->where('type', 'MEMO|NOTES');
+    Route::get('/viewer/{type}/{tag}', 'SearchController@viewer')->name('viewer.tag')->where('type', 'MEMO|NOTES');
+    Route::get('/viewer/{type}/', 'SearchController@viewer')->name('viewer')->where('type', 'MEMO|NOTES');
 
     Auth::routes();
 
@@ -22,8 +23,9 @@
 
         Route::resource('tags', 'TagController');
 
-        Route::get('/items/{type}/{tag?}', 'ItemController@index')->name('items.index')->where('type', 'MEMO|NOTES');
         Route::get('/items/{type}/create', 'ItemController@create')->name('items.create')->where('type', 'MEMO|NOTES');
+        Route::get('/items/{type}/{tag}', 'ItemController@index')->name('items.index.tag')->where('type', 'MEMO|NOTES');
+        Route::get('/items/{type}', 'ItemController@index')->name('items.index')->where('type', 'MEMO|NOTES');
         Route::resource('items', 'ItemController')->except(['index', 'create']);
 
         Route::resource('users', 'UsersController');

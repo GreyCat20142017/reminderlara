@@ -6,10 +6,11 @@ import Pagination from '@/Shared/Pagination';
 import Layout from '@/Shared/Layout';
 import SimpleTable from '@/Shared/SimpleTable/SimpleTable';
 import FilterByTag from '@/Shared/Filter/FilterByTag';
+import FilterButtons from '@/Shared/Filter/FilterButtons';
 import {CONTENT_TITLES} from '@/constants';
 
 
-const Index = ({items, type = CONTENT_TYPES.MEMO, allTags, filterTitle}) => {
+const Index = ({items, type = CONTENT_TYPES.MEMO, allTags, filterTitle = '', filtered = false}) => {
     const [filterMode, setFilterMode] = useState(false);
     const {data, links} = items;
 
@@ -22,7 +23,9 @@ const Index = ({items, type = CONTENT_TYPES.MEMO, allTags, filterTitle}) => {
         Inertia.visit(id ? `/items/${type}/${id}` : `/items/${type}`);
     };
 
-    const onShowFilter = () => setFilterMode(true);
+    const onFilterReset = () => onFilter();
+
+    const onFilterShow = () => setFilterMode(true);
 
     return (
         <Layout>
@@ -44,10 +47,8 @@ const Index = ({items, type = CONTENT_TYPES.MEMO, allTags, filterTitle}) => {
                                          title={'Сквозной просмотр'}>
                                 Пролистать все
                             </InertiaLink>
-                            <button className='btn btn-outline-primary ml-2' onClick={onShowFilter}
-                                    title={'Выбрать фильтр по тегу'}>
-                                Фильтр
-                            </button>
+                            <FilterButtons filtered={filtered} margin={'ml-2'}
+                                           onFilterShow={onFilterShow} onFilterReset={onFilterReset}/>
                         </div>
                         <SimpleTable data={data} edit={onEdit} hiddenColumns={['user_id', 'type']}/>
                         <Pagination links={links}/>

@@ -46,7 +46,8 @@
                 'type' => $type,
                 'referer' => $referer,
                 'pageLimit' => self::PAGE_LIMIT,
-                'filterTitle' => $tag->exists ? 'по тегу ' . $tag->name : 'все записи'
+                'filterTitle' => $tag->exists ? 'по тегу ' . $tag->name : 'все записи',
+                'filtered' => $tag->exists
             ]);
         }
     }

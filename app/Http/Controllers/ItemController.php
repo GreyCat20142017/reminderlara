@@ -17,7 +17,8 @@
             return Inertia::render('Items/Index', [
                 'items' => $items,
                 'type' => $type,
-                'filterTitle' => $tag->exists ? 'по тегу ' . $tag->name : 'все записи'
+                'filterTitle' => $tag->exists ? 'по тегу ' . $tag->name : 'все записи',
+                'filtered' => $tag->exists
             ]);
         }
 

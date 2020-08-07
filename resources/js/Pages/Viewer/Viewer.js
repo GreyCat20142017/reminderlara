@@ -5,6 +5,7 @@ import Layout from '@/Shared/Layout'
 import Pagination from '@/Shared/Pagination';
 import Refs from '@/Shared/Refs';
 import FilterByTag from '@/Shared/Filter/FilterByTag';
+import FilterButtons from '@/Shared/Filter/FilterButtons';
 import {isNotEmptyArray, isValidIndex} from '@/functions';
 import {CONTENT_TITLES, CONTENT_TYPES} from '@/constants';
 
@@ -40,7 +41,7 @@ const ItemViewer = ({item}) => {
     )
 };
 
-const Viewer = ({items, type, referer, allTags, filterTitle}) => {
+const Viewer = ({items, type, referer, allTags, filterTitle = '', filtered = false}) => {
     const {data, links} = items;
     const [filterMode, setFilterMode] = useState(false);
     const [current, setCurrent] = useState(getInitialIndex(links, referer, data ? data.length : 0));
@@ -71,7 +72,9 @@ const Viewer = ({items, type, referer, allTags, filterTitle}) => {
         Inertia.visit(id ? `/viewer/${type}/${id}` : `/viewer/${type}`);
     };
 
-    const onShowFilter = () => setFilterMode(true);
+    const onFilterReset = () => onFilter();
+
+    const onFilterShow = () => setFilterMode(true);
 
     const title = `Сквозной просмотр списка ${CONTENT_TITLES[type].split(' ').pop()}`;
 
@@ -86,11 +89,9 @@ const Viewer = ({items, type, referer, allTags, filterTitle}) => {
                     <>
                         <h4 className='text-primary'>{title}</h4>
                         <h6>Фильтр: {filterTitle}</h6>
-                        <button className='btn btn-sm btn-block btn-outline-primary mt-3' onClick={onShowFilter}
-                                title={'Выбрать фильтр по тегу'}>
-                            Фильтр
-                        </button>
+                        <FilterButtons filtered={filtered} onFilterShow={onFilterShow} onFilterReset={onFilterReset}/>
                         <hr/>
+
                         {
                             (isNotEmptyArray(data) && isValidIndex(current, data)) ?
                                 <>
